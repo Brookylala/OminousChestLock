@@ -1,0 +1,10 @@
+.gradle/
+build/
+*.log
+*.iml
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+# Gradle wrapper JAR is tracked
+!gradle/wrapper/gradle-wrapper.jar

@@ -1,0 +1,13 @@
+name: OminousChestLock
+main: com.example.chestlock.ChestLockPlugin
+version: ${version}
+api-version: "1.21"
+commands:
+  chestlock:
+    description: Admin commands for ChestLock
+    usage: "/chestlock <info|unlock|reload|keyinfo|loglevel|normalkeys|help>"
+    permission: chestlock.admin
+permissions:
+  chestlock.admin:
+    description: Allows use of ChestLock admin commands
+    default: op

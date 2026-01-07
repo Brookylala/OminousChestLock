@@ -1,0 +1,6 @@
+logging:
+  # 0 = nothing, 1 = everything, 2 = failed + destruction/automation, 3 = destruction/automation only
+  level: 1
+keys:
+  # false = ominous trial keys only, true = ominous + normal trial keys
+  allow-normal: false
