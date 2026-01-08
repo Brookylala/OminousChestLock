@@ -137,11 +137,7 @@ public final class ChestLockPlugin extends JavaPlugin implements Listener, TabCo
         }
 
         if (args.length == 0) {
-            if (sender instanceof Player player) {
-                sendHelp(player);
-            } else {
-                sender.sendMessage(Component.text("Usage: /chestlock <info|unlock|keyinfo|reload|loglevel|normalkeys|lockpicks|give|help>"));
-            }
+            sendHelp(sender);
             return true;
         }
 
@@ -353,11 +349,7 @@ public final class ChestLockPlugin extends JavaPlugin implements Listener, TabCo
                 return true;
             }
             default -> {
-                if (sender instanceof Player player) {
-                    sendHelp(player);
-                } else {
-                    sender.sendMessage(Component.text("Usage: /chestlock <info|unlock|keyinfo|reload|loglevel|normalkeys|lockpicks|lockoutscope|give|help>"));
-                }
+                sendHelp(sender);
                 return true;
             }
         }
@@ -396,16 +388,16 @@ public final class ChestLockPlugin extends JavaPlugin implements Listener, TabCo
         return List.of();
     }
 
-    private void sendHelp(Player player) {
-        player.sendMessage(Component.text("/chestlock info - show lock key name for looked-at container"));
-        player.sendMessage(Component.text("/chestlock unlock - force unlock looked-at container"));
-        player.sendMessage(Component.text("/chestlock keyinfo - show lock info for key in hand"));
-        player.sendMessage(Component.text("/chestlock reload - reload lock data from disk"));
-        player.sendMessage(Component.text("/chestlock loglevel <0-3> - set log verbosity"));
-        player.sendMessage(Component.text("/chestlock normalkeys <on|off> - allow normal trial keys"));
-        player.sendMessage(Component.text("/chestlock lockpicks <on|off> - allow lock picking and crafting"));
-        player.sendMessage(Component.text("/chestlock lockoutscope <chest|player> - set lockout scope"));
-        player.sendMessage(Component.text("/chestlock give <player> <rusty|normal|silence> [amount] - give lock picks"));
+    private void sendHelp(CommandSender sender) {
+        sender.sendMessage(Component.text("/chestlock info - show lock key name for looked-at container"));
+        sender.sendMessage(Component.text("/chestlock unlock - force unlock looked-at container"));
+        sender.sendMessage(Component.text("/chestlock keyinfo - show lock info for key in hand"));
+        sender.sendMessage(Component.text("/chestlock reload - reload lock data from disk"));
+        sender.sendMessage(Component.text("/chestlock loglevel <0-3> - set log verbosity"));
+        sender.sendMessage(Component.text("/chestlock normalkeys <on|off> - allow normal trial keys"));
+        sender.sendMessage(Component.text("/chestlock lockpicks <on|off> - allow lock picking and crafting"));
+        sender.sendMessage(Component.text("/chestlock lockoutscope <chest|player> - set lockout scope"));
+        sender.sendMessage(Component.text("/chestlock give <player> <rusty|normal|silence> [amount] - give lock picks"));
     }
 
     private PickType parsePickType(String value) {
