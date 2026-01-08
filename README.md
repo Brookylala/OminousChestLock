@@ -18,13 +18,17 @@ Vault sounds are used for success/failure feedback.
 
 ![Crafting](https://i.imgur.com/7i5efl9.png)
 
-Three lock picks can be crafted and used to pick locked containers when you do not have the correct key. Pick attempts are tracked per lock and pick tier.
+Three lock picks can be crafted and used to pick locked containers when you do not have the correct key. Attempts and lockouts are tracked per pick type, using the configured lockout scope.
 
-- Rusty pick: `copper ingot + tripwire hook + stick`, 100% break chance, 5% open chance (10% on normal-key locks). Over-limit attempts always fail.
-- Normal pick: `iron ingot + tripwire hook + breeze rod`, 50% break chance, 10% open chance (20% on normal-key locks). Over-limit attempts always fail.
-- Silence pick: `normal pick + silence trim + echo shard` in a smithing table, 2% break chance, 50% base open chance. After the limit, each attempt halves the chance; the penalty resets after 1 hour.
+- Rusty pick: `copper ingot + tripwire hook + stick`, default 100% break chance, 5% open chance (10% on normal-key locks).
+- Normal pick: `iron ingot + tripwire hook + breeze rod`, default 50% break chance, 10% open chance (20% on normal-key locks).
+- Silence pick: `normal pick + silence trim + echo shard` in a smithing table, default 5% break chance, 50% base open chance. After lockout, each attempt halves the chance; the penalty resets after the configured time.
 
-On failed attempts, the player takes damage (0.5/1/2 hearts for rusty/normal/silence). Rusty/normal picks play chest-locked sounds, then vault deactivate on lockout and vault hit on further attempts. Silence picks only play a sound on the lockout (vault deactivate), then vault hit until the 1-hour reset.
+Lockout limit is a random roll between `lockpicks.limit.min` and `lockpicks.limit.max` (inclusive). The roll happens on the first pick attempt for that pick type and is stored on the lock until it is unlocked/destroyed.
+
+Lockout scope can be set to `chest` (shared across all players) or `player` (each player has their own lockout/attempts) via `lockpicks.lockout-scope`.
+
+On failed attempts, the player takes damage (defaults: 0.5/1/2 hearts for rusty/normal/silence). Rusty/normal picks play chest-locked sounds, then vault deactivate on lockout and vault hit on further attempts. Silence picks only play a sound on the lockout (vault deactivate), then vault hit until the penalty reset.
 
 ### Resource pack
 Item model overrides and textures are provided in `src/main/resources/resourcepack`. Use this folder as a resource pack to see the lock pick textures in-hand and in inventories.
@@ -32,24 +36,38 @@ Item model overrides and textures are provided in `src/main/resources/resourcepa
 A prepackaged zip will be provided in the releases page along with the compiled binary of this plugin.
 
 ## Data
-Lock data is stored in `plugins/OminousChestLock/data.yml`. Entries include the key name, creator, and last user.
+Lock data is stored in `plugins/OminousChestLock/data.yml`. Entries include the key name, creator, and last user. If enabled, it will also show information about who tried to pick the lock as well as information about their attempt.
+
+Unlocked chests are removed from the ```data.yml```.
+
 Existing entries from older versions are automatically read and upgraded when saved.
 
 Example:
 ```yaml
 locked-chests:
-  world:10,64,20:
-    key: secretkeyname
+  test:-8,104,40:
+    key: key2
     world:
-      name: world
+      name: test
       realm: OVERWORLD
       uuid: 01234567-89ab-cdef-0123-456789abcdef
     creator:
-      name: Bingo
+      name: Billy
       uuid: 01234567-89ab-cdef-0123-456789abcdef
     last-user:
-      name: Steve
-      uuid: fedcba98-7654-3210-cake-ba9876543210
+      name: Tito
+      uuid: 01234567-89ab-cdef-0123-456789abcdef
+    pick:
+      last:
+        name: CevAPI
+        uuid: 01234567-89ab-cdef-0123-456789abcdef
+        type: silence
+        timestamp: 1767877437911
+      silence:
+        limit: 2
+        attempts: 3
+        over-limit-attempts: 3
+        penalty-timestamp: 1767877437911
 ```
 
 ## Admin commands
@@ -91,6 +109,41 @@ Config in `plugins/OminousChestLock/config.yml`:
   - `break-chance` = break chance per attempt (0.0–1.0)
   - `damage` = hearts of damage per failed attempt
   - `penalty-reset-minutes` = silence pick over-limit reset time (minutes)
+
+Example:
+```yaml
+logging:
+  # 0 = nothing, 1 = everything, 2 = failed + destruction/automation, 3 = destruction/automation only
+  level: 1
+keys:
+  # false = ominous trial keys only, true = ominous + normal trial keys
+  allow-normal: true
+lockpicks:
+  # true = allow lock pick crafting and usage
+  enabled: true
+  # random attempt limit before lockout
+  limit:
+    min: 1
+    max: 20
+  # lockout scope: "chest" = shared for all players, "player" = per-player lockout tracking
+  lockout-scope: chest
+  rusty:
+    open-chance: 0.05
+    normal-key-chance: 0.1
+    break-chance: 1.0
+    damage: 1.0
+  normal:
+    open-chance: 0.1
+    normal-key-chance: 0.2
+    break-chance: 0.5
+    damage: 2.0
+  silence:
+    open-chance: 0.5
+    break-chance: 0.05
+    damage: 4.0
+    # time until over-limit penalty resets
+    penalty-reset-minutes: 60
+```
 
 ### Example log entries
 ```
