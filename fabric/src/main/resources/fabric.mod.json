@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "ominouschestlock",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "Locks chests, barrels, and shulker boxes to ominous trial keys, with optional lock picking.",
+  "authors": [
+    "CevAPI"
+  ],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.example.chestlock.fabric.ChestLockFabric"
+    ]
+  },
+  "mixins": [
+    "chestlock.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabricLoaderVersion}",
+    "minecraft": ">=${minecraftVersion}",
+    "fabric-api": ">=${fabricApiVersion}"
+  }
+}

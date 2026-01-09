@@ -2,7 +2,7 @@
 
 ![Screenshot](https://i.imgur.com/lheQ9q9.png)
 
-Paper plugin for Minecraft 1.21.0-1.21.11+ that locks chests, double chests, barrels, and shulker boxes to a named ominous trial key and optionally allows players to lock-pick them!
+Paper plugin (1.21.0–1.21.11+) and Fabric server mod (1.21.11) that locks chests, double chests, barrels, and shulker boxes to a named Ominous or regular Trial Key, with optional lockpicking.
 
 ## How it works
 - Rename an ominous trial key in an anvil (example: `secretkeyname`).
@@ -161,7 +161,9 @@ lockpicks:
 ```shell
 ./gradlew clean build
 ```
-The jar will be in `build/libs/OminousChestLock-1.0.0.jar`.
+Paper jar: `paper/build/libs/OminousChestLock-1.x.0_Paper.jar`
+
+Fabric jar: `fabric/build/libs/OminousChestLock-1.x.0_Fabric.jar`
 
 ## Permissions
 - `chestlock.admin` - Allows use of admin commands (default: op).
