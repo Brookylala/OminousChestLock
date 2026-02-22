@@ -1,3 +1,7 @@
+###FORKED FOR USE WITH OZ-ANARCHY TOWNS
+
+**SEE ORIGINAL FOR USE ELSEWHERE** https://github.com/cev-api/OminousChestLock
+
 # OminousChestLock
 
 ![Screenshot](https://i.imgur.com/lheQ9q9.png)
