@@ -1,0 +1,4 @@
+name: OminousChestLock
+version: '1.1.0'
+main: net.ozanarchy.chestlock.ChestLockPlugin
+api-version: '1.21'
